@@ -1,5 +1,5 @@
 <?php
-
+require_once "./Classes/DB.php";
 /*
  * 1 - Uniquement pour la pratique, reproduisez via mysql workbench le schémas proposé.
  * 2 - Exportez le résultat de manière à créer les tables en base de données.
@@ -7,3 +7,14 @@
  * 4 - A l'aide d'un simple print_r, afficher les rôles de chaque utilisateur.
  * 5 - FIN !
  */
+
+$stmt = DB::getInstance()->prepare("SELECT * FROM user_role INNER JOIN user ON user.id = user_role.user_fk INNER JOIN role ON role.id = user_role.role_fk");
+$res = $stmt->execute();
+
+if($res) {
+    foreach ($stmt->fetchAll() as $value) {
+        echo "<pre>";
+        print_r($value);
+        echo "</pre>";
+    }
+}
